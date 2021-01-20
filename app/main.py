@@ -5,12 +5,15 @@ from werkzeug.exceptions import HTTPException
 from config import routes
 
 app = Flask(__name__)
-app.register_blueprint(routes.health_check_api)
 app.register_blueprint(routes.root_api)
 app.register_blueprint(routes.artist_api)
 app.register_blueprint(routes.album_api)
 app.register_blueprint(routes.artist_album_api)
 app.register_blueprint(routes.album_complete_api)
+
+# passphrase endpoints
+app.register_blueprint(routes.pp_basic_api)
+app.register_blueprint(routes.pp_advanced_api)
 
 
 @app.errorhandler(HTTPException)

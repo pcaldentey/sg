@@ -53,5 +53,5 @@ class AlbumResource(Resource):
         return [{'album': row.Title,
                  'artist': row.Name,
                  'total duration': row.total,
-                 'longest': row.longest,
+                 'longest duration': row.longest,
                  'shortest duration': row.shortest} for row in result]
