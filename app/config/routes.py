@@ -1,4 +1,3 @@
-from http import HTTPStatus
 from flask import Blueprint
 from flask import jsonify
 from flask import request
@@ -34,6 +33,7 @@ def passphrase_basic():
     if 'passphrase' not in request.json \
             or request.json['passphrase'] is None:
         raise PassPhraseNotFound()
+
 
     resource = PassphraseResource(request)
     return jsonify(resource.basic())

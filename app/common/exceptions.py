@@ -13,4 +13,4 @@ class PassPhraseNotFound(werkzeug.exceptions.HTTPException):
 
 class PassPhraseInvalid(werkzeug.exceptions.HTTPException):
     code = 400
-    description = 'passphrase parameter not found.'
+    description = 'passphrase parameter invalid.'
