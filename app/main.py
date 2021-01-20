@@ -1,16 +1,12 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from config import database
 
+from config import routes
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = database.SQLALCHEMY_DATABASE_URI
-db = SQLAlchemy(app)
+app.register_blueprint(routes.health_check_api)
+app.register_blueprint(routes.root_api)
 
 
-@app.route("/")
-def hello():
-    return "Hello World!"
 
 
 if __name__ == "__main__":
