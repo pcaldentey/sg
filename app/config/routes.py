@@ -3,6 +3,9 @@ from flask import Blueprint
 from flask import jsonify
 from flask import request
 
+from common.exceptions import ArtistNotFound
+from config.database import Artist
+from config.database import session
 from endpoints.music.artists import ArtistResource
 from endpoints.music.albums import AlbumResource
 
@@ -11,7 +14,7 @@ HEALTH_CHECK = '/_health-check'
 ARTISTS = '/artists'
 ALBUMS = '/albums'
 COMPLETE = '/advanced'
-ARTIST_ALBUMS = '/albums/<int:artist_id>'
+ARTIST_ALBUMS = '/artists/<int:artist_id>/albums'
 
 health_check_api = Blueprint('health_check', __name__, url_prefix='/')
 root_api = Blueprint('root', __name__, url_prefix='/')
@@ -28,10 +31,15 @@ def album_complete():
     return "artistss album complete list "
 
 
-# List of albums for one artist (restricted to authenticated users) /albums/%artist_id
+# List of albums for one artist (restricted to authenticated users) /artists/%artist_id/albums
 @artist_album_api.route(rule=ARTIST_ALBUMS, methods=['GET'])
 def artist_album(artist_id):
-    return "artistss album  list {}".format(artist_id)
+    exists = session.query(Artist).filter_by(ArtistId=artist_id).scalar() is not None
+    if not exists:
+        raise ArtistNotFound
+
+    resource = AlbumResource()
+    return jsonify(resource.artists_album_list(request, artist_id))
 
 
 # List of artists (public endpoint) //artists
