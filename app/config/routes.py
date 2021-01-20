@@ -1,5 +1,9 @@
 from http import HTTPStatus
 from flask import Blueprint
+from flask import jsonify
+from flask import request
+
+from endpoints.music.artists import ArtistResource
 
 #from endpoints.music,artists import artists_resource
 
@@ -33,7 +37,8 @@ def artist_album(artist_id):
 # List of artists (public endpoint) //artists
 @artist_api.route(rule=ARTISTS, methods=['GET'])
 def artists():
-    return "artistss list "
+    resource = ArtistResource()
+    return jsonify(resource.artist_list(request))
 
 # List of albums with songs (restricted to authenticated users) /albums
 @album_api.route(rule=ALBUMS, methods=['GET'])
