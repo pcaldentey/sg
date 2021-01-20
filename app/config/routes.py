@@ -6,9 +6,9 @@ from common.exceptions import ArtistNotFound
 from common.exceptions import PassPhraseNotFound
 from config.database import Artist
 from config.database import session
-from endpoints.music.artists import ArtistResource
-from endpoints.music.albums import AlbumResource
-from endpoints.passphrase.passphrase import PassphraseResource
+from resources.music.artists import ArtistResource
+from resources.music.albums import AlbumResource
+from resources.passphrase.passphrase import PassphraseResource
 
 
 ARTISTS = '/artists'

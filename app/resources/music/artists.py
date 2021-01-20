@@ -1,6 +1,6 @@
 from config.database import session
 from config.database import Artist
-from endpoints.resource import Resource
+from resources.resource import Resource
 
 
 class ArtistResource(Resource):
