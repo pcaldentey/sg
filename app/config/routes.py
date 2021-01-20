@@ -3,7 +3,7 @@ from flask import jsonify
 from flask import request
 
 from common.exceptions import ArtistNotFound
-from common.exceptions import PassPhraseInvalid, PassPhraseNotFound
+from common.exceptions import PassPhraseNotFound
 from config.database import Artist
 from config.database import session
 from endpoints.music.artists import ArtistResource
@@ -33,7 +33,6 @@ def passphrase_basic():
     if 'passphrase' not in request.json \
             or request.json['passphrase'] is None:
         raise PassPhraseNotFound()
-
 
     resource = PassphraseResource(request)
     return jsonify(resource.basic())

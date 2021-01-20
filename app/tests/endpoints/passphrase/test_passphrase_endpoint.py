@@ -5,7 +5,7 @@ from http import HTTPStatus
 from tests.base import BaseApiTestCase
 
 
-class PassphraseResourceTestCase(BaseApiTestCase):
+class PassphraseEndpointTestCase(BaseApiTestCase):
     def test_basic(self):
         path = 'http://localhost/passphrase/basic'
 
@@ -89,6 +89,7 @@ class PassphraseResourceTestCase(BaseApiTestCase):
             json.loads(response.text),
             {'total passphrases': 2, 'valid passphrases': 0}
         )
+
     def test_advanced_no_body_error(self):
         path = 'http://localhost/passphrase/advanced'
 
