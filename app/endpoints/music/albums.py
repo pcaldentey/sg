@@ -15,7 +15,7 @@ class AlbumResource(Resource):
                  ).format(limit=self.size, offset=self.offset)
         result = session.execute(query)
 
-        return [{'album': key, 'tracks': value} for key, value in self._group_by_album(result).items()]
+        return {'data': [{'album': key, 'tracks': value} for key, value in self._group_by_album(result).items()]}
 
     def _group_by_album(self, rows):
         """ Group track in their album """
@@ -27,10 +27,11 @@ class AlbumResource(Resource):
                 albums[i.Title] = [i.Name]
         return albums
 
-    def artists_album_list(self, request, artist_id):
+    def artists_album_list(self, request, artist_obj):
         """ List of albums for one artist """
-        result = session.query(Album).join(Artist).filter(Artist.ArtistId == artist_id)
-        artist_name = result[0].artists.Name
+        result = session.query(Album).join(Artist).filter(Artist.ArtistId == artist_obj.ArtistId)
+        artist_name = artist_obj.Name
+
         return {'artist name': artist_name, 'albums': [i.Title for i in result]}
 
     def album_advanced_list(self, request):
@@ -50,8 +51,10 @@ class AlbumResource(Resource):
                  ).format(limit=self.size, offset=self.offset)
         result = session.execute(query)
 
-        return [{'album': row.Title,
-                 'artist': row.Name,
-                 'total duration': row.total,
-                 'longest duration': row.longest,
-                 'shortest duration': row.shortest} for row in result]
+        return {'data': [
+                    {'album': row.Title,
+                     'artist': row.Name,
+                     'total duration': row.total,
+                     'longest duration': row.longest,
+                     'shortest duration': row.shortest} for row in result]
+                }

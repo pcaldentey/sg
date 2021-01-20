@@ -60,12 +60,12 @@ def album_complete():
 # List of albums for one artist (restricted to authenticated users) /artists/%artist_id/albums
 @artist_album_api.route(rule=ARTIST_ALBUMS, methods=['GET'])
 def artist_album(artist_id):
-    exists = session.query(Artist).filter_by(ArtistId=artist_id).scalar() is not None
-    if not exists:
+    artist = session.query(Artist).filter_by(ArtistId=artist_id).first()
+    if not artist:
         raise ArtistNotFound
 
     resource = AlbumResource()
-    return jsonify(resource.artists_album_list(request, artist_id))
+    return jsonify(resource.artists_album_list(request, artist))
 
 
 # List of artists (public endpoint) /artists
