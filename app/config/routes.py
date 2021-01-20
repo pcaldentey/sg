@@ -4,6 +4,7 @@ from flask import jsonify
 from flask import request
 
 from endpoints.music.artists import ArtistResource
+from endpoints.music.albums import AlbumResource
 
 
 HEALTH_CHECK = '/_health-check'
@@ -27,7 +28,7 @@ def album_complete():
     return "artistss album complete list "
 
 
-# List of albums for one artist /albums/%artist_id
+# List of albums for one artist (restricted to authenticated users) /albums/%artist_id
 @artist_album_api.route(rule=ARTIST_ALBUMS, methods=['GET'])
 def artist_album(artist_id):
     return "artistss album  list {}".format(artist_id)
@@ -42,7 +43,8 @@ def artists():
 # List of albums with songs (restricted to authenticated users) /albums
 @album_api.route(rule=ALBUMS, methods=['GET'])
 def albums():
-    return "albumss list "
+    resource = AlbumResource()
+    return jsonify(resource.album_list(request))
 
 
 @health_check_api.route(rule=HEALTH_CHECK)
