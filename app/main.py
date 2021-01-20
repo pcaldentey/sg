@@ -8,12 +8,12 @@ app = Flask(__name__)
 app.register_blueprint(routes.root_api)
 app.register_blueprint(routes.artist_api)
 app.register_blueprint(routes.album_api)
-app.register_blueprint(routes.artist_album_api)
-app.register_blueprint(routes.album_complete_api)
 
 # passphrase endpoints
-app.register_blueprint(routes.pp_basic_api)
-app.register_blueprint(routes.pp_advanced_api)
+app.register_blueprint(routes.pp_api)
+
+# authethication endpoints
+app.register_blueprint(routes.authentication_api)
 
 
 @app.errorhandler(HTTPException)
