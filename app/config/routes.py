@@ -1,6 +1,8 @@
 from flask import Blueprint
 from flask import jsonify
 from flask import request
+# from flask_jwt import current_identity
+from flask_jwt import jwt_required
 
 from common.exceptions import ArtistNotFound
 from common.exceptions import PassPhraseNotFound
@@ -26,13 +28,6 @@ album_api = Blueprint('albums', __name__, url_prefix=ALBUMS)
 
 pp_api = Blueprint('passphrase', __name__, url_prefix=PASSPHRASE)
 
-authentication_api = Blueprint("authentication", __name__, url_prefix=AUTH)
-
-
-@authentication_api.route(LOGIN, methods=["POST"])
-def login_user():
-    pass
-
 
 @pp_api.route(rule=BASIC, methods=['POST'])
 def passphrase_basic():
@@ -56,6 +51,7 @@ def passphrase_advanced():
 
 # List of albums for one artist (restricted to authenticated users) /artists/%artist_id/albums
 @artist_api.route(rule=ARTIST_ALBUMS, methods=['GET'])
+@jwt_required()
 def artist_album(artist_id):
     artist = session.query(Artist).filter_by(ArtistId=artist_id).first()
     if not artist:
@@ -74,6 +70,7 @@ def artists():
 
 # List of albums with songs (restricted to authenticated users) /albums
 @album_api.route(rule='', methods=['GET'])
+@jwt_required()
 def albums():
     resource = AlbumResource()
     return jsonify(resource.album_list(request))
@@ -83,6 +80,7 @@ def albums():
 # tracks duration), longest track duration and shortest track duration. (restricted
 # to authenticated users) /albums/advanced
 @album_api.route(rule=ADVANCED, methods=['GET'])
+@jwt_required()
 def album_complete():
     resource = AlbumResource()
     return jsonify(resource.album_advanced_list(request))

@@ -8,10 +8,13 @@ from tests.base import BaseApiTestCase
 class AlbumsEndpointTestCase(BaseApiTestCase):
     def test_default_params(self):
         path = 'http://localhost/albums'
+
+        token = self._get_access_token('http://localhost/auth', 'testuser2', 'abcxyz')
         response = self.request_get(
             path=path,
             status=HTTPStatus.OK,
-            params={'page': 1, 'size': 2}
+            params={'page': 1, 'size': 2},
+            headers={'Authorization': 'JWT {}'.format(token)}
         )
         self.assertDictEqual(
             json.loads(response.text),

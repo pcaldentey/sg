@@ -59,3 +59,15 @@ class BaseApiTestCase(TestCase):
 
     def request_put(self, path, body, status=HTTPStatus.OK, headers=None):
         return self._request_method('PUT', path, status, headers, body)
+
+    def _get_access_token(self, path, user, password):
+        response = self.request_post(
+            path=path,
+            status=HTTPStatus.OK,
+            body={
+                "username": user,
+                "password": password
+            }
+        )
+        data = json.loads(response.text)
+        return data['access_token']
