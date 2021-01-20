@@ -13,7 +13,7 @@ from endpoints.music.albums import AlbumResource
 HEALTH_CHECK = '/_health-check'
 ARTISTS = '/artists'
 ALBUMS = '/albums'
-COMPLETE = '/advanced'
+ADVANCED = '/advanced'
 ARTIST_ALBUMS = '/artists/<int:artist_id>/albums'
 
 health_check_api = Blueprint('health_check', __name__, url_prefix='/')
@@ -26,9 +26,10 @@ album_complete_api = Blueprint('albumscomplete', __name__, url_prefix=ALBUMS)
 # List of albums, including artist name, track count, total album duration (sum of
 # tracks duration), longest track duration and shortest track duration. (restricted
 # to authenticated users) /albums/advanced
-@album_complete_api.route(rule=COMPLETE, methods=['GET'])
+@album_complete_api.route(rule=ADVANCED, methods=['GET'])
 def album_complete():
-    return "artistss album complete list "
+    resource = AlbumResource()
+    return jsonify(resource.album_advanced_list(request))
 
 
 # List of albums for one artist (restricted to authenticated users) /artists/%artist_id/albums
@@ -42,7 +43,7 @@ def artist_album(artist_id):
     return jsonify(resource.artists_album_list(request, artist_id))
 
 
-# List of artists (public endpoint) //artists
+# List of artists (public endpoint) /artists
 @artist_api.route(rule=ARTISTS, methods=['GET'])
 def artists():
     resource = ArtistResource()

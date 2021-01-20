@@ -8,4 +8,4 @@ class Resource:
 
         self.page = page if page else constants.PAGE_NUMBER
         self.size = size if size else constants.PAGE_SIZE
-        self.offset = int((self.page) - 1) * int(self.size)
+        self.offset = (int(self.page) - 1) * int(self.size)
