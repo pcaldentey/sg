@@ -5,7 +5,6 @@ from flask import request
 
 from endpoints.music.artists import ArtistResource
 
-#from endpoints.music,artists import artists_resource
 
 HEALTH_CHECK = '/_health-check'
 ARTISTS = '/artists'
