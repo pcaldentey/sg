@@ -6,6 +6,6 @@ class Resource:
         page = request.args.get('page')
         size = request.args.get('size')
 
-        self.page = page if page else constants.PAGE_NUMBER
-        self.size = size if size else constants.PAGE_SIZE
-        self.offset = (int(self.page) - 1) * int(self.size)
+        self.page = int(page if page else constants.PAGE_NUMBER)
+        self.size = int(size if size else constants.PAGE_SIZE)
+        self.offset = (self.page - 1) * self.size

@@ -34,7 +34,8 @@ class AlbumsAdvancedTestCase(BaseApiTestCase):
                             "shortest duration": 215196,
                             "total duration": 2453259
                         }
-                    ]
+                    ],
+                "meta": {"page": 2, "size": 2}
              }
         )
 

@@ -15,7 +15,12 @@ class AlbumResource(Resource):
                  ).format(limit=self.size, offset=self.offset)
         result = session.execute(query)
 
-        return {'data': [{'album': key, 'tracks': value} for key, value in self._group_by_album(result).items()]}
+        return {'data': [{'album': key, 'tracks': value} for key, value in self._group_by_album(result).items()],
+                'meta': {
+                        'page': self.page,
+                        'size': self.size
+                    }
+                }
 
     def _group_by_album(self, rows):
         """ Group track in their album """
@@ -56,5 +61,9 @@ class AlbumResource(Resource):
                      'artist': row.Name,
                      'total duration': row.total,
                      'longest duration': row.longest,
-                     'shortest duration': row.shortest} for row in result]
+                     'shortest duration': row.shortest} for row in result],
+                'meta': {
+                        'page': self.page,
+                        'size': self.size
+                    }
                 }

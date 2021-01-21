@@ -39,7 +39,8 @@ class AlbumsEndpointTestCase(BaseApiTestCase):
                     "tracks": [
                         "Balls to the Wall"
                     ]
-                }]
+                }],
+                "meta": {"page": 1, "size": 2}
              }
         )
 

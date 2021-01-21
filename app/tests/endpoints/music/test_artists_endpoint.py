@@ -14,7 +14,9 @@ class ArtistsEndpointTestCase(BaseApiTestCase):
         )
         self.assertDictEqual(
             json.loads(response.text),
-            {'data': [
+            {
+             'meta': {'page': 1, 'size': 20},
+             'data': [
                 {'id': 1, 'name': 'AC/DC'}, {'id': 2, 'name': 'Accept'}, {'id': 3, 'name': 'Aerosmith'},
                 {'id': 4, 'name': 'Alanis Morissette'}, {'id': 5, 'name': 'Alice In Chains'},
                 {'id': 6, 'name': 'Antônio Carlos Jobim'}, {'id': 7, 'name': 'Apocalyptica'},
@@ -24,7 +26,7 @@ class ArtistsEndpointTestCase(BaseApiTestCase):
                 {'id': 15, 'name': 'Buddy Guy'}, {'id': 16, 'name': 'Caetano Veloso'},
                 {'id': 17, 'name': 'Chico Buarque'}, {'id': 18, 'name': 'Chico Science & Nação Zumbi'},
                 {'id': 19, 'name': 'Cidade Negra'}, {'id': 20, 'name': 'Cláudio Zoli'}
-                ]
+                 ]
              }
         )
 
@@ -42,7 +44,8 @@ class ArtistsEndpointTestCase(BaseApiTestCase):
                 {'id': 6, 'name': 'Antônio Carlos Jobim'},
                 {'id': 7, 'name': 'Apocalyptica'},
                 {'id': 8, 'name': 'Audioslave'}
-                ]
+                ],
+             'meta': {'page': 2, 'size': 4}
              }
         )
 
