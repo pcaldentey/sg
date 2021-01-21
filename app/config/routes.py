@@ -1,8 +1,10 @@
+from flask import abort
 from flask import Blueprint
 from flask import jsonify
 from flask import request
 # from flask_jwt import current_identity
 from flask_jwt import jwt_required
+from http import HTTPStatus
 
 from common.exceptions import ArtistNotFound
 from common.exceptions import PassPhraseNotFound
@@ -31,9 +33,12 @@ pp_api = Blueprint('passphrase', __name__, url_prefix=PASSPHRASE)
 
 @pp_api.route(rule=BASIC, methods=['POST'])
 def passphrase_basic():
-    if 'passphrase' not in request.json \
-            or request.json['passphrase'] is None:
-        raise PassPhraseNotFound()
+    try:
+        if 'passphrase' not in request.json \
+               or request.json['passphrase'] is None:
+            raise PassPhraseNotFound()
+    except TypeError:
+        abort(HTTPStatus.BAD_REQUEST)
 
     resource = PassphraseResource(request)
     return jsonify(resource.basic())
@@ -41,9 +46,12 @@ def passphrase_basic():
 
 @pp_api.route(rule=ADVANCED, methods=['POST'])
 def passphrase_advanced():
-    if 'passphrase' not in request.json \
-            or request.json['passphrase'] is None:
-        raise PassPhraseNotFound()
+    try:
+        if 'passphrase' not in request.json \
+                or request.json['passphrase'] is None:
+            raise PassPhraseNotFound()
+    except TypeError:
+        abort(HTTPStatus.BAD_REQUEST)
 
     resource = PassphraseResource(request)
     return jsonify(resource.advanced())

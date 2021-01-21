@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import json
-from flask_jwt import JWT, jwt_required, current_identity
+from flask_jwt import JWT
 from werkzeug.exceptions import HTTPException
 
 from common.authentication import authenticate, identity
