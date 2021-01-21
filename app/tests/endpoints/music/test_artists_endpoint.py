@@ -61,3 +61,18 @@ class ArtistsEndpointTestCase(BaseApiTestCase):
             {"status_code": 405, "description": "The method is not allowed for the requested URL.",
              "name": "Method Not Allowed"}
         )
+
+    def test_exceeded_page_number_error(self):
+        path = 'http://localhost/artists'
+
+        response = self.request_get(
+            path=path,
+            status=HTTPStatus.BAD_REQUEST,
+            params={'page': 2000},
+        )
+        self.assertDictEqual(
+            json.loads(response.text),
+            {'description': 'Page number exceeded the last page number',
+             'name': 'Bad Request',
+             'status_code': 400}
+        )
