@@ -96,4 +96,4 @@ def album_complete():
 
 @root_api.route("/")
 def hello():
-    return "Hello World!"
+    return "Hello World! This is StyleSage api test"
