@@ -55,3 +55,32 @@ class AlbumsEndpointTestCase(BaseApiTestCase):
             {"status_code": 405, "description": "The method is not allowed for the requested URL.",
              "name": "Method Not Allowed"}
         )
+
+    def test_not_auth__token_error(self):
+        path = 'http://localhost/albums'
+
+        response = self.request_get(
+            path=path,
+            status=HTTPStatus.UNAUTHORIZED,
+        )
+        self.assertDictEqual(
+            json.loads(response.text),
+            {"status_code": 401, "description": "Request does not contain an access token",
+                "error": "Authorization Required"}
+        )
+
+    def test_expired_token_error(self):
+        path = 'http://localhost/albums'
+        token = (
+                "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTExODU1NzUsImlhdCI6M"
+                "TYxMTE4NTI3NSwibmJmIjoxNjExMTg1Mjc1LCJpZGVudGl0eSI6Mn0.rUZw9j94TZ-RpH73F_uHLQhBuKozFnl5mFXNZFJKLrk")
+
+        response = self.request_get(
+            path=path,
+            status=HTTPStatus.UNAUTHORIZED,
+            headers={'Authorization': 'JWT {}'.format(token)}
+        )
+        self.assertDictEqual(
+            json.loads(response.text),
+            {"status_code": 401, "description": "Signature has expired", "error": "Invalid token"}
+        )
