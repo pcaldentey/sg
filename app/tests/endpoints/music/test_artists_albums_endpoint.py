@@ -54,10 +54,10 @@ class ArtistsAlbumsEndpointTestCase(BaseApiTestCase):
         )
         self.assertDictEqual(
             json.loads(response.text),
-            {"code": 404, "description": "Artist not found.", "name": "Not Found"}
+            {"status_code": 404, "description": "Artist not found.", "name": "Not Found"}
         )
 
-    def test_not_auth_error(self):
+    def test_not_auth__token_error(self):
         path = 'http://localhost/artists/{}/albums'.format(1)  # AC/DC
 
         response = self.request_get(
@@ -70,6 +70,22 @@ class ArtistsAlbumsEndpointTestCase(BaseApiTestCase):
                 "error": "Authorization Required"}
         )
 
+    def test_expired_token_error(self):
+        path = 'http://localhost/artists/{}/albums'.format(4500)
+        token = (
+                "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTExODU1NzUsImlhdCI6M"
+                "TYxMTE4NTI3NSwibmJmIjoxNjExMTg1Mjc1LCJpZGVudGl0eSI6Mn0.rUZw9j94TZ-RpH73F_uHLQhBuKozFnl5mFXNZFJKLrk")
+
+        response = self.request_get(
+            path=path,
+            status=HTTPStatus.UNAUTHORIZED,
+            headers={'Authorization': 'JWT {}'.format(token)}
+        )
+        self.assertDictEqual(
+            json.loads(response.text),
+            {"status_code": 401, "description": "Signature has expired", "error": "Invalid token"}
+        )
+
     def test_method_not_allowed_error(self):
         path = 'http://localhost/artists/{}/albums'.format(1)  # AC/DC
         response = self.request_post(
@@ -78,6 +94,6 @@ class ArtistsAlbumsEndpointTestCase(BaseApiTestCase):
         )
         self.assertDictEqual(
             json.loads(response.text),
-            {"code": 405, "description": "The method is not allowed for the requested URL.",
+            {"status_code": 405, "description": "The method is not allowed for the requested URL.",
              "name": "Method Not Allowed"}
         )

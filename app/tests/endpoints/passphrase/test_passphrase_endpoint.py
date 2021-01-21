@@ -58,7 +58,7 @@ class PassphraseEndpointTestCase(BaseApiTestCase):
         )
         self.assertDictEqual(
             json.loads(response.text),
-            {"code": 400, "description": "Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)",
+            {"status_code": 400, "description": "Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)",
                 "name": "Bad Request"}
         )
 
@@ -72,7 +72,7 @@ class PassphraseEndpointTestCase(BaseApiTestCase):
         )
         self.assertDictEqual(
             json.loads(response.text),
-            {'code': 400,
+            {'status_code': 400,
              'description': 'passphrase parameter invalid.',
              'name': 'Bad Request'}
         )
@@ -100,7 +100,7 @@ class PassphraseEndpointTestCase(BaseApiTestCase):
         )
         self.assertDictEqual(
             json.loads(response.text),
-            {"code": 400, "description": "Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)",
+            {"status_code": 400, "description": "Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)",
                 "name": "Bad Request"}
         )
 
@@ -114,7 +114,7 @@ class PassphraseEndpointTestCase(BaseApiTestCase):
         )
         self.assertDictEqual(
             json.loads(response.text),
-            {'code': 400,
+            {'status_code': 400,
              'description': 'passphrase parameter invalid.',
              'name': 'Bad Request'}
         )

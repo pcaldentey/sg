@@ -27,7 +27,7 @@ def handle_exception(e):
     response = e.get_response()
     # replace the body with JSON
     response.data = json.dumps({
-        "code": e.code,
+        "status_code": e.code,
         "name": e.name,
         "description": e.description,
     })

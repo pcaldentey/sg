@@ -52,6 +52,6 @@ class AlbumsEndpointTestCase(BaseApiTestCase):
         )
         self.assertDictEqual(
             json.loads(response.text),
-            {"code": 405, "description": "The method is not allowed for the requested URL.",
+            {"status_code": 405, "description": "The method is not allowed for the requested URL.",
              "name": "Method Not Allowed"}
         )
