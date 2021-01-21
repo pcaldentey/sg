@@ -1,0 +1,5 @@
+PAGE_SIZE = 20
+PAGE_NUMBER = 1
+MAX_PER_PAGE = 100
+
+SECRET_KEY = "StyleSageGoesSecret"
