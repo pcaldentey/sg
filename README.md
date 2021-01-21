@@ -39,7 +39,7 @@ List of artists (public endpoint)
 
 input:
 
-    curl -X GET -H "Accept:application/json" -H "Content-Type:application/json"  http://localhost/artists?page=1&size=2
+    curl -X GET -H "Accept:application/json" -H "Content-Type:application/json" "http://localhost/artists?page=1&size=2"
 
 
 output:
@@ -192,7 +192,7 @@ Once the cointainer is up, run
 
     docker exec -t sg_app pytest
 
-25 tests are testing the endpoints. Functionality is so simple that I think these test are enough.
+28 tests are testing the endpoints. Functionality is so simple that I think these test are enough.
 
 ## Source Code and implementation facts.
 

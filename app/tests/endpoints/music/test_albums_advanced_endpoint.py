@@ -39,6 +39,23 @@ class AlbumsAdvancedTestCase(BaseApiTestCase):
              }
         )
 
+    def test_exceeded_page_number_error(self):
+        path = 'http://localhost/albums/advanced'
+
+        token = self._get_access_token('http://localhost/auth', 'testuser2', 'abcxyz')
+        response = self.request_get(
+            path=path,
+            status=HTTPStatus.BAD_REQUEST,
+            params={'page': 2000},
+            headers={'Authorization': 'JWT {}'.format(token)}
+        )
+        self.assertDictEqual(
+            json.loads(response.text),
+            {'description': 'Page number exceeded the last page number',
+             'name': 'Bad Request',
+             'status_code': 400}
+        )
+
     def test_method_not_allowed_error(self):
         path = 'http://localhost/albums/advanced'
         response = self.request_post(

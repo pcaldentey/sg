@@ -14,3 +14,8 @@ class PassPhraseNotFound(werkzeug.exceptions.HTTPException):
 class PassPhraseInvalid(werkzeug.exceptions.HTTPException):
     code = 400
     description = 'passphrase parameter invalid.'
+
+
+class PageNumberInvalid(werkzeug.exceptions.HTTPException):
+    code = 400
+    description = 'Page number exceeded the last page number'
